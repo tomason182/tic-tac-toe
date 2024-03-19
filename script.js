@@ -9,10 +9,24 @@ function Gameboard() {
             board[i].push(Cell());
         }
     }
+
+    const getBoard = () => board;
+
+    const selectCell = (column ,row ,player) => {
+        
+        if (board[row][column].getValue() === 0) {
+            board[row][column].addToken(player);
+        }       
+    };
+
+    const printBoard = () => {
+        const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()));
+        console.log(boardWithCellValues);
+    };
+
+    return {getBoard, selectCell, printBoard}
 }
 
-
-const getBoard = () => board;
 
 function Cell() {
     let value = 0;
@@ -49,15 +63,16 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
     const getActivePlayer = () => activePlayer;
 
     const printNewRound = () => {
-        board.printboard();
-        console.log(`$getActivePlayer().name's turn`);
+        board.printBoard();
+        console.log(`${getActivePlayer().name}'s turn`);
     };
 
-    const playRound = (column) => {
-        console.log(`Dropping ${getActivePlayer().name}'s token into colum ${column}...`);
-    
+    const playRound = (column, row) => {
+        console.log(
+            `Dropping ${getActivePlayer().name}'s token into colum ${column}...`
+        );          
 
-        board.droptoken(column, getActivePlayer().token);
+        board.selectCell(column, row, getActivePlayer().token);
 
         switchPlayerTurn();
         printNewRound();
@@ -72,4 +87,5 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
     };
 }
 
+const game = GameController();
 
