@@ -76,6 +76,8 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
 
         board.selectCell(column, row, getActivePlayer().token);
 
+        /* Here we shoudl add logic to check for a winner */
+
         switchPlayerTurn();
         printNewRound();
     
@@ -85,9 +87,51 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
 
     return {
         playRound,
-        getActivePlayer
+        getActivePlayer,
+        getBoard: board.getBoard
     };
 }
 
-const game = GameController();
+function ScreenController() {
+    const game = GameController();
+    const playerturnDiv = document.querySelector('.turn');
+    const boardDiv = document.querySelector('.board');
+
+    const updateScreen = () => {
+        boardDiv.textContent = "";
+
+        const board = game.getBoard();
+        const activePlayer = game.getActivePlayer();
+
+        playerturnDiv.textContent =`${activePlayer.name}'s turn...`;
+
+        board.forEach((row, indexRow) => {
+            row.forEach((cell, indexColumn) =>{
+                const cellButton = document.createElement("button");
+                cellButton.classList.add("cell");
+                cellButton.dataset.row = indexRow;
+                cellButton.dataset.column = indexColumn;
+                cellButton.textContent = cell.getValue();
+                boardDiv.appendChild(cellButton);
+            });
+        });
+    }
+
+    function clickHandlerBoard(e) {
+        const selectedRow = e.target.dataset.row;
+        const selectedColumn = e.target.dataset.column;
+
+        if (!selectedColumn || !selectedRow)  return; 
+    
+        game.playRound(selectedColumn, selectedRow);
+        updateScreen();
+    }
+
+boardDiv.addEventListener("click", clickHandlerBoard);
+
+updateScreen();
+
+}
+
+
 
