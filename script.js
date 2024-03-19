@@ -22,4 +22,54 @@ function Cell() {
     };
 
     const getValue = () => value; 
+    
+    return {addToken, getValue};
 }
+
+function GameController (playerOneName = "Player One", playerTwoName = "Player Two") {
+
+    const board = Gameboard();
+
+    const players = [
+        {
+            name: playerOneName, 
+            token: 1},
+        {
+            name: playerTwoName,
+            token: 2
+        }
+        ];
+    
+    let activePlayer = players[0];
+
+    const switchPlayerTurn = () => {
+        activePlayer = activePlayer === players[0] ? players[1] : players[0];
+    };
+
+    const getActivePlayer = () => activePlayer;
+
+    const printNewRound = () => {
+        board.printboard();
+        console.log(`$getActivePlayer().name's turn`);
+    };
+
+    const playRound = (column) => {
+        console.log(`Dropping ${getActivePlayer().name}'s token into colum ${column}...`);
+    
+
+        board.droptoken(column, getActivePlayer().token);
+
+        switchPlayerTurn();
+        printNewRound();
+    
+    };
+
+    printNewRound();
+
+    return {
+        playRound,
+        getActivePlayer
+    };
+}
+
+
