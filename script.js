@@ -19,6 +19,7 @@ function Gameboard() {
         }       
     };
 
+    //prints the board in the console. Just for testing purpose.
     const printBoard = () => {
         const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()));
         console.log(boardWithCellValues);
@@ -47,7 +48,8 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
     const players = [
         {
             name: playerOneName, 
-            token: 1},
+            token: 1
+        },
         {
             name: playerTwoName,
             token: 2
@@ -69,7 +71,7 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
 
     const playRound = (column, row) => {
         console.log(
-            `Dropping ${getActivePlayer().name}'s token into colum ${column}...`
+            `Dropping ${getActivePlayer().name}'s token into colum ${column} and row ${row}`
         );          
 
         board.selectCell(column, row, getActivePlayer().token);
