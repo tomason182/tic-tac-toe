@@ -12,7 +12,7 @@ function Gameboard() {
 
     const getBoard = () => board;
 
-    const selectCell = (column ,row ,player) => {
+    const cellSelection = (row ,column ,player) => {
         
         if (board[row][column].getValue() === 0) {
             board[row][column].addToken(player);
@@ -25,7 +25,7 @@ function Gameboard() {
         console.log(boardWithCellValues);
     };
 
-    return {getBoard, selectCell, printBoard}
+    return {getBoard, cellSelection, printBoard}
 }
 
 
@@ -59,27 +59,55 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
     let activePlayer = players[0];
 
     const switchPlayerTurn = () => {
-        activePlayer = activePlayer === players[0] ? players[1] : players[0];
+        
+            activePlayer = activePlayer === players[0] ? players[1] : players[0];       
+        
     };
 
     const getActivePlayer = () => activePlayer;
 
+    /*Not necesary function. Only console display*/
     const printNewRound = () => {
         board.printBoard();
         console.log(`${getActivePlayer().name}'s turn`);
     };
 
-    const playRound = (column, row) => {
-        console.log(
+    const playRound = (row, column) => {
+        
+        const boardArray = board.getBoard();
+        
+        if (boardArray[row][column].getValue() === 0) {
+
+            /*Only console display*/
+            console.log(
             `Dropping ${getActivePlayer().name}'s token into colum ${column} and row ${row}`
-        );          
+            );
 
-        board.selectCell(column, row, getActivePlayer().token);
 
-        /* Here we shoudl add logic to check for a winner */
+            board.cellSelection(row, column, getActivePlayer().token);
 
-        switchPlayerTurn();
-        printNewRound();
+            boardArray.forEach((row) => {
+                if (row[0].getValue() === row[1].getValue() &&
+                    row[1].getValue() === row[2].getValue() &&
+                    row[0].getValue() !== 0) {
+                        
+                    console.log(`${getActivePlayer().name} win`);
+                    }
+                
+                row.forEach((column){
+                    if()
+                
+                })
+
+            })
+
+            
+
+            /* Here we shoudl add logic to check for a winner */
+
+            switchPlayerTurn();
+            printNewRound();
+        }      
     
     };
 
@@ -123,7 +151,7 @@ function ScreenController() {
 
         if (!selectedColumn || !selectedRow)  return; 
     
-        game.playRound(selectedColumn, selectedRow);
+        game.playRound(selectedRow, selectedColumn);
         updateScreen();
     }
 
@@ -132,6 +160,8 @@ boardDiv.addEventListener("click", clickHandlerBoard);
 updateScreen();
 
 }
+
+ScreenController()
 
 
 
