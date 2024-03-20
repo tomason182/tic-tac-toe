@@ -85,29 +85,31 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
                     return false;
                 }  
             }
-
-            if (row[0] !== 0){
-                return true;
-            }   
             
-        }
-            
+            return true;
+                     
+        }            
     }
     
-
     const allEqualsInColumns = (array) => {
 
-
-        array.forEach((row, i) =>{
-            row.forEach((column, j) => {
-                firtsElementColumn = array[0][j];
-                if (array[i][j] === firtsElementColumn && firtsElementColumn !== 0){
-                    return true;
+        for (j = 0; j < array[0].length; j ++) {
+            const firstColumnElement = array[0][j];
+        
+            for (i = 0; i < array.length; i ++) {
+            
+                if (array[i][j] !== firstColumnElement){
+                    return false;
                 }
-            })
-        })
+            }        
+            
+            return true;
+            
+        }       
+
 
     }
+  
 
     const playRound = (row, column) => {
         
