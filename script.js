@@ -14,7 +14,7 @@ function Gameboard() {
 
     const cellSelection = (row ,column ,player) => {
         
-        if (board[row][column].getValue() === 0) {
+        if (board[row][column].getValue() === undefined) {
             board[row][column].addToken(player);
         }       
     };
@@ -30,7 +30,7 @@ function Gameboard() {
 
 
 function Cell() {
-    let value = 0;
+    let value;
 
     const addToken = (player) => {
         value = player;
@@ -86,7 +86,7 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
                 
                 initialValue = row[0].getValue();
 
-                if(row[j].getValue() === initialValue && initialValue !== 0) {
+                if(row[j].getValue() === initialValue && initialValue !== undefined) {
                     isEqual = true;
                 }else{
                     isEqual = false;
@@ -110,7 +110,7 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
             initialValue = array[0][j].getValue();
         
             for (let i = 0; i < array.length; i++) {
-                if(array[i][j].getValue() === initialValue && initialValue !== 0){
+                if(array[i][j].getValue() === initialValue && initialValue !== undefined){
                     isEqual = true;
                 }else{
                     isEqual = false;
@@ -131,9 +131,9 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
         lastLeftValue = array[2][0].getValue();
         lastRightValue = array[2][2].getValue();
 
-        if (initialLeftValue === middleValue && initialLeftValue === lastRightValue && initialLeftValue !== 0){
+        if (initialLeftValue === middleValue && initialLeftValue === lastRightValue && initialLeftValue !== undefined){
             return true;
-        }else if(initialRightValue === middleValue && initialRightValue === lastLeftValue && initialRightValue !== 0) {
+        }else if(initialRightValue === middleValue && initialRightValue === lastLeftValue && initialRightValue !== undefined) {
             return true;
         }else{
             return false;
@@ -146,7 +146,7 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
         
         const boardArray = board.getBoard();
         
-        if (boardArray[row][column].getValue() === 0) {
+        if (boardArray[row][column].getValue() === undefined) {
 
             /* Only console display */
             console.log(
