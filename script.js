@@ -75,12 +75,22 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
 
     const allEqualsInRow = (array) => {
       
-        array.forEach((row, i) => {
+        for (i = 0; i < array.length; i++) {
 
-            if (row[i] === row[0] && row[0] !== 0){
-                return true;
+            const row = array[i]
+
+            for(j = 0; j < row.length; j++ ) {
+                
+                if (row[j] !== row[0]) {
+                    return false;
+                }  
             }
-        })
+
+            if (row[0] !== 0){
+                return true;
+            }   
+            
+        }
             
     }
     
