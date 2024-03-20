@@ -123,6 +123,23 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
         }
         return isEqual;
     }
+
+    const allEqualsInDiagonal = (array) => {
+        initialLeftValue = array[0][0].getValue();
+        initialRightValue = array[0][2].getValue();
+        middleValue = array[1][1].getValue();
+        lastLeftValue = array[2][0].getValue();
+        lastRightValue = array[2][2].getValue();
+
+        if (initialLeftValue === middleValue && initialLeftValue === lastRightValue && initialLeftValue !== 0){
+            return true;
+        }else if(initialRightValue === middleValue && initialRightValue === lastLeftValue && initialRightValue !== 0) {
+            return true;
+        }else{
+            return false;
+        }
+
+    }
   
 
     const playRound = (row, column) => {
@@ -138,11 +155,11 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
 
             board.cellSelection(row, column, getActivePlayer().token);
 
-           if (allEqualsInRow(boardArray) === true || allEqualsInColumns(boardArray)) {
+           if (allEqualsInRow(boardArray) === true || allEqualsInColumns(boardArray) || 
+                allEqualsInDiagonal(boardArray)) {
+
                 alert(`${getActivePlayer().name} WIN!!`)
            }
-
-            /* Here we shoudl add logic to check for a winner */
 
             switchPlayerTurn();
             printNewRound();
