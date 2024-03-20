@@ -73,19 +73,28 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
     };
 
 
-    const allEqualsInRow = (array, rowIndex) => {
-
-        const row = array[rowIndex];
-
-        for (let i=0; i < row.length; i++) {
+    const allEqualsInRow = (array) => {
+      
+        array.forEach((row, i) => {
 
             if (row[i] === row[0] && row[0] !== 0){
                 return true;
             }
-        }
+        })
+            
     }
+    
 
-    const allEqualsInColumns = (array, colIndex) => {
+    const allEqualsInColumns = (array) => {
+
+        array.forEach((row, i) =>{
+            row.forEach((column, j) => {
+                firtsElementColumn = array[0][j];
+                if (array[i][j] === firstElement && firstElement !== 0){
+                    return true;
+                }
+            })
+        })
 
         const firstElement = array[0][colIndex];
 
