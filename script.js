@@ -74,8 +74,11 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
 
 
     const allEqualsInRow = (array, rowIndex) => {
+
         const row = array[rowIndex];
+
         for (let i=0; i < row.length; i++) {
+
             if (row[i] === row[0] && row[0] !== 0){
                 return true;
             }
@@ -84,14 +87,15 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
 
     const allEqualsInColumns = (array, colIndex) => {
 
-        const column = array[0][colIndex];
+        const firstElement = array[0][colIndex];
 
         for (let j = 0; j < colIndex.lenght; j++){
 
-            
+            if (array[j][colIndex] === firstElement && firstElement !== 0){
+                return true;
+            }
+
         }
-
-
 
     }
 
@@ -108,6 +112,8 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
 
 
             board.cellSelection(row, column, getActivePlayer().token);
+
+            if allEqualsInRow(boardArray, )
 
             
 
