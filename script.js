@@ -87,24 +87,15 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
 
     const allEqualsInColumns = (array) => {
 
+
         array.forEach((row, i) =>{
             row.forEach((column, j) => {
                 firtsElementColumn = array[0][j];
-                if (array[i][j] === firstElement && firstElement !== 0){
+                if (array[i][j] === firtsElementColumn && firtsElementColumn !== 0){
                     return true;
                 }
             })
         })
-
-        const firstElement = array[0][colIndex];
-
-        for (let j = 0; j < colIndex.lenght; j++){
-
-            if (array[j][colIndex] === firstElement && firstElement !== 0){
-                return true;
-            }
-
-        }
 
     }
 
@@ -122,11 +113,12 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
 
             board.cellSelection(row, column, getActivePlayer().token);
 
-            if allEqualsInRow(boardArray, )
+            if (allEqualsInRow(boardArray) === true || allEqualsInColumns(boardArray) === true) {
 
+                console.log(`The winner is ${getActivePlayer().name}`)   
             
+            }          
 
-            
 
             /* Here we shoudl add logic to check for a winner */
 
