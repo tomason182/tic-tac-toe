@@ -73,39 +73,38 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
     };
 
 
-    const allEqualsInRow = (array) => {
-      
-        for (i = 0; i < array.length; i++) {
+    const allEqualsInRow = (array) => {        
 
-            const row = array[i]
+        let isEqual; 
 
-            for(j = 0; j < row.length; j++ ) {
+        for (let i = 0; i < array.length; i++) {
+
+            row = array[i];
+            
+
+            for (let j = 0; j < row.length; j++){
                 
-                if (row[j] !== row[0]) {
-                    return false;
-                }  
+                initialValue = row[0].getValue();
+
+                if(row[j].getValue() === initialValue && initialValue !== 0) {
+                    isEqual = true;
+                }else{
+                    isEqual = false;
+                    break;
+                }
             }
             
-            return true;
-                     
-        }            
+            if (isEqual === true){
+                
+                return isEqual;
+            }            
+        }        
+        return isEqual;
     }
     
+    
     const allEqualsInColumns = (array) => {
-
-        for (j = 0; j < array[0].length; j ++) {
-            const firstColumnElement = array[0][j];
-        
-            for (i = 0; i < array.length; i ++) {
-            
-                if (array[i][j] !== firstColumnElement){
-                    return false;
-                }
-            }        
-            
-            return true;
-            
-        }       
+      
 
 
     }
@@ -121,15 +120,13 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
             console.log(
             `Dropping ${getActivePlayer().name}'s token into colum ${column} and row ${row}`
             );
-
+               
 
             board.cellSelection(row, column, getActivePlayer().token);
 
-            if (allEqualsInRow(boardArray) === true || allEqualsInColumns(boardArray) === true) {
-
-                console.log(`The winner is ${getActivePlayer().name}`)   
-            
-            }          
+           if (allEqualsInRow(boardArray) === true) {
+                console.log(`${getActivePlayer().name} WIN!!`)
+           }
 
 
             /* Here we shoudl add logic to check for a winner */
