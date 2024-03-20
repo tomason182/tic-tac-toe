@@ -72,6 +72,29 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
         console.log(`${getActivePlayer().name}'s turn`);
     };
 
+
+    const allEqualsInRow = (array, rowIndex) => {
+        const row = array[rowIndex];
+        for (let i=0; i < row.length; i++) {
+            if (row[i] === row[0] && row[0] !== 0){
+                return true;
+            }
+        }
+    }
+
+    const allEqualsInColumns = (array, colIndex) => {
+
+        const column = array[0][colIndex];
+
+        for (let j = 0; j < colIndex.lenght; j++){
+
+            
+        }
+
+
+
+    }
+
     const playRound = (row, column) => {
         
         const boardArray = board.getBoard();
@@ -86,20 +109,7 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
 
             board.cellSelection(row, column, getActivePlayer().token);
 
-            boardArray.forEach((row) => {
-                if (row[0].getValue() === row[1].getValue() &&
-                    row[1].getValue() === row[2].getValue() &&
-                    row[0].getValue() !== 0) {
-                        
-                    console.log(`${getActivePlayer().name} win`);
-                    }
-                
-                row.forEach((column){
-                    if()
-                
-                })
-
-            })
+            
 
             
 
