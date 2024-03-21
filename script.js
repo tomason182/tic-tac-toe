@@ -50,9 +50,11 @@ function gameController() {
     const playerTwoName = "Player Two";
 
     const board = gameBoard();
+    const result = gameResult(board);
+
 
     const printNewBoard = () => {
-        console.log(board.printBoard())
+        console.log(board.printBoard());
     }
 
     const players = [
@@ -75,17 +77,22 @@ function gameController() {
     const getActivePlayer = () => activePlayer;
 
     const playRound = (row, column) => {
-
-        actualBoard =  board.printBoard();
         
-        if (actualBoard[row][column] === undefined){
+        if (board.printBoard()[row][column] === undefined){
             board.setToken(row, column, getActivePlayer().token);
-            switchPlayer();
             printNewBoard();
+            
+            if (result.tiedGame()) {
+                console.log("El juego esta empatado");
+            }
+            if (result.allEqualRows()) {
+                console.log(`El ganador es el: ${getActivePlayer().name}`);
+            }else{ 
+                console.log(result.allEqualRows())
+            }
+           
+            switchPlayer();        
         }
-
-        
-
     }    
 
     return {
@@ -94,7 +101,42 @@ function gameController() {
         playRound,
         printNewBoard
     }
-
 }
 
-const game = gameController();
+function gameResult (board) {
+
+    const tiedGame = () => {
+        const allCellsFull = (cell) => cell !== undefined && cell !== null;
+        return board.printBoard().every(row => row.every(allCellsFull))
+    }
+
+    const allEqualRows = () => {
+        for (let i = 0; i < board.printBoard().length; i ++){
+
+            if (board.printBoard()[i].every((cell) => cell === board.printBoard()[i][0]) && board.printBoard()[i][0] !== undefined){
+                return true;
+            }                
+        }
+        return false;
+    }
+
+    /* no considerar allEqualColumns. Todavia no disponible */
+
+    const allEqualColumns = () => {
+        for (let i = 0; i < board[0].length; i++){
+            let column = []
+            for (let j = 0; j < board.length; j++) {
+                column.push(board[j][i]);
+            }
+            return column.every((cell)=> cell === cell[0]);     
+            
+        }
+    }
+
+    return {
+       tiedGame,
+       allEqualRows,
+    }
+}
+
+const game = gameController()
