@@ -76,9 +76,15 @@ function gameController() {
 
     const playRound = (row, column) => {
 
-        board.setToken(row, column, getActivePlayer().token);
-        switchPlayer();
-        printNewBoard()
+        actualBoard =  board.printBoard();
+        
+        if (actualBoard[row][column] === undefined){
+            board.setToken(row, column, getActivePlayer().token);
+            switchPlayer();
+            printNewBoard();
+        }
+
+        
 
     }    
 
