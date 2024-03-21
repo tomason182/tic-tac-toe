@@ -208,6 +208,8 @@ function ScreenController() {
     
         game.playRound(selectedRow, selectedColumn);
 
+        /* game.checkwinner() */
+
         updateScreen();
     }
 
