@@ -14,14 +14,28 @@ function gameBoard () {
 
     const printBoard = () => {
         getCellsValues =  board.map((row) => row.map((cell) => cell.getValue()))
+        return getCellsValues;
+    }
+
+    return {
+        getBoard,
+        printBoard
+    };
+}
+
+function Cell() {
+    let value;
+
+    addToken = (playerToken) => {
+        value = playerToken;
+    }
+
+    getValue = () => value;
+
+    return {
+        addToken,
+        getValue
     }
 }
 
-
-function Cell() {
-
-    
-}
-
-
-
+const game = gameBoard();
