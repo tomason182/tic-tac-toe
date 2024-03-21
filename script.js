@@ -149,21 +149,26 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
 
             board.cellSelection(row, column, getActivePlayer().token);
 
-/*             const boardArray = board.printBoard(); 
-            console.log(boardArray);   
-                             
-
-            if (allEqualsInRow(boardArray) === true || allEqualsInColumns(boardArray) || 
-                allEqualsInDiagonal(boardArray)) {
-
-                alert(`${getActivePlayer().name} WIN!!`);
-                resetPlayRound();
-            } */
 
             switchPlayerTurn()
         } 
     
-    };
+    }
+
+    const checkForWinner = (array) => {
+        if (allEqualsInRow(array) === true || allEqualsInColumns(array) === true ||
+            allEqualsInDiagonal(array === true)) {
+                alert(`${getActivePlayer().name} WIN!!`)
+            }
+    }
+
+    const checkForTiedGame = (array) => {
+        const tiedGame = array.every(row => row.every(cell => cell !== undefined));
+
+        if (tiedGame === true) {
+            alert('It is a Tied Game');
+        }
+    }
 
     printNewRound();
 
