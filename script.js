@@ -12,17 +12,16 @@ function Gameboard() {
 
     const getBoard = () => board;
 
-    const cellSelection = (row ,column ,player) => {
-        
-        if (board[row][column].getValue() === undefined) {
-            board[row][column].addToken(player);
-        }       
+    const cellSelection = (row ,column ,player) => {        
+
+        board[row][column].addToken(player);       
+            
     };
 
     
     const printBoard = () => {
         const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()));
-        console.log(boardWithCellValues);
+        return boardWithCellValues;
     };
 
     return {getBoard, cellSelection, printBoard}
@@ -48,11 +47,11 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
     const players = [
         {
             name: playerOneName, 
-            token: 1
+            token: 'X'
         },
         {
             name: playerTwoName,
-            token: 2
+            token: 'O'
         }
         ];
     
@@ -84,9 +83,9 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
 
             for (let j = 0; j < row.length; j++){
                 
-                initialValue = row[0].getValue();
+                initialValue = row[0];
 
-                if(row[j].getValue() === initialValue && initialValue !== undefined) {
+                if(row[j] === initialValue && initialValue !== undefined) {
                     isEqual = true;
                 }else{
                     isEqual = false;
@@ -107,10 +106,10 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
       
         let isEqual;
         for(let j = 0; j < array[0].length; j++) {
-            initialValue = array[0][j].getValue();
+            initialValue = array[0][j];
         
             for (let i = 0; i < array.length; i++) {
-                if(array[i][j].getValue() === initialValue && initialValue !== undefined){
+                if(array[i][j] === initialValue && initialValue !== undefined){
                     isEqual = true;
                 }else{
                     isEqual = false;
@@ -125,11 +124,11 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
     }
 
     const allEqualsInDiagonal = (array) => {
-        initialLeftValue = array[0][0].getValue();
-        initialRightValue = array[0][2].getValue();
-        middleValue = array[1][1].getValue();
-        lastLeftValue = array[2][0].getValue();
-        lastRightValue = array[2][2].getValue();
+        initialLeftValue = array[0][0];
+        initialRightValue = array[0][2];
+        middleValue = array[1][1];
+        lastLeftValue = array[2][0];
+        lastRightValue = array[2][2];
 
         if (initialLeftValue === middleValue && initialLeftValue === lastRightValue && initialLeftValue !== undefined){
             return true;
@@ -143,27 +142,26 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
   
 
     const playRound = (row, column) => {
-        
-        const boardArray = board.getBoard();
-        
-        if (boardArray[row][column].getValue() === undefined) {
 
-            /* Only console display */
-            console.log(
-            `Dropping ${getActivePlayer().name}'s token into colum ${column} and row ${row}`
-            );               
+        mainBoard = board.getBoard();
+
+        if(mainBoard[row][column].getValue() === undefined){
 
             board.cellSelection(row, column, getActivePlayer().token);
 
-           if (allEqualsInRow(boardArray) === true || allEqualsInColumns(boardArray) || 
+            const boardArray = board.printBoard(); /* It would be easy if take printboard function - has the values */
+            console.log(boardArray);   
+                             
+
+            if (allEqualsInRow(boardArray) === true || allEqualsInColumns(boardArray) || 
                 allEqualsInDiagonal(boardArray)) {
 
-                alert(`${getActivePlayer().name} WIN!!`)
-           }
+                alert(`${getActivePlayer().name} WIN!!`);
+                resetPlayRound();
+            }
 
-            switchPlayerTurn();
-            printNewRound();
-        }      
+            switchPlayerTurn()
+        } 
     
     };
 
@@ -172,7 +170,8 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
     return {
         playRound,
         getActivePlayer,
-        getBoard: board.getBoard
+        getBoard: board.getBoard,
+        printBoard: board.printBoard
     };
 }
 
@@ -184,7 +183,7 @@ function ScreenController() {
     const updateScreen = () => {
         boardDiv.textContent = "";
 
-        const board = game.getBoard();
+        const board = game.printBoard();
         const activePlayer = game.getActivePlayer();
 
         playerturnDiv.textContent =`${activePlayer.name}'s turn...`;
@@ -195,7 +194,7 @@ function ScreenController() {
                 cellButton.classList.add("cell");
                 cellButton.dataset.row = indexRow;
                 cellButton.dataset.column = indexColumn;
-                cellButton.textContent = cell.getValue();
+                cellButton.textContent = cell;
                 boardDiv.appendChild(cellButton);
             });
         });
@@ -208,12 +207,13 @@ function ScreenController() {
         if (!selectedColumn || !selectedRow)  return; 
     
         game.playRound(selectedRow, selectedColumn);
+
         updateScreen();
     }
 
-boardDiv.addEventListener("click", clickHandlerBoard);
+    boardDiv.addEventListener("click", clickHandlerBoard);
 
-updateScreen();
+    updateScreen();
 
 }
 
