@@ -149,7 +149,7 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
 
             board.cellSelection(row, column, getActivePlayer().token);
 
-            const boardArray = board.printBoard(); /* It would be easy if take printboard function - has the values */
+/*             const boardArray = board.printBoard(); 
             console.log(boardArray);   
                              
 
@@ -158,7 +158,7 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
 
                 alert(`${getActivePlayer().name} WIN!!`);
                 resetPlayRound();
-            }
+            } */
 
             switchPlayerTurn()
         } 
