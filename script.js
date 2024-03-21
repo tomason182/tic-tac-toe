@@ -17,9 +17,15 @@ function gameBoard () {
         return getCellsValues;
     }
 
+    const printCell = (indexRow, indexColumn, Token) => 
+    {
+        board[indexRow][indexColumn].addToken(Token);
+    }
+
     return {
         getBoard,
-        printBoard
+        printBoard,
+        printCell
     };
 }
 
@@ -38,4 +44,36 @@ function Cell() {
     }
 }
 
-const game = gameBoard();
+function gameController() {
+    const playerOneName = "Player One";
+    const playerTwoName = "Player Two";
+
+    const players = [
+        {
+            name: playerOneName,
+            token: 'X'  
+        },
+        {
+            name: playerTwoName,
+            token: 'O'
+        }
+    ];
+
+    let activePlayer = players[0];
+
+    const switchPlayer = () => {
+        activePlayer = activePlayer === players[0] ? players[1] : players[0];
+    }
+    
+    const getActivePlayer = () => activePlayer;
+
+    return {
+        switchPlayer,
+        getActivePlayer,
+    }
+
+}
+
+
+
+const game = gameController();
