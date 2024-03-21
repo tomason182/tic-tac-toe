@@ -50,8 +50,7 @@ function gameController() {
     const playerTwoName = "Player Two";
 
     const board = gameBoard();
-    const result = gameResult(board);
-
+    result = gameResult(board);
 
     const printNewBoard = () => {
         console.log(board.printBoard());
@@ -103,24 +102,22 @@ function gameController() {
     }
 }
 
-function gameResult (board) {
-
+function gameResult (board) {  
+    
     const tiedGame = () => {
+        const currentBoard = board.printBoard();
         const allCellsFull = (cell) => cell !== undefined && cell !== null;
-        return board.printBoard().every(row => row.every(allCellsFull))
-    }
+        return currentBoard.every(row => row.every(allCellsFull))    }
 
     const allEqualRows = () => {
-        for (let i = 0; i < board.printBoard().length; i ++){
-
-            if (board.printBoard()[i].every((cell) => cell === board.printBoard()[i][0]) && board.printBoard()[i][0] !== undefined){
+        const currentBoard = board.printBoard();
+        for (let i = 0; i < currentBoard.length; i ++){
+            if (currentBoard[i].every((cell) => cell === currentBoard[i][0]) && currentBoard[i][0] !== undefined){
                 return true;
             }                
         }
         return false;
     }
-
-    /* no considerar allEqualColumns. Todavia no disponible */
 
     const allEqualColumns = () => {
         for (let i = 0; i < board[0].length; i++){
