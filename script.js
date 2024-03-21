@@ -124,6 +124,7 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
     }
 
     const allEqualsInDiagonal = (array) => {
+        console.log(array)
         initialLeftValue = array[0][0];
         initialRightValue = array[0][2];
         middleValue = array[1][1];
@@ -138,8 +139,7 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
             return false;
         }
 
-    }
-  
+    }  
 
     const playRound = (row, column) => {
 
@@ -148,25 +148,33 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
         if(mainBoard[row][column].getValue() === undefined){
 
             board.cellSelection(row, column, getActivePlayer().token);
-
-
-            switchPlayerTurn()
+            switchPlayerTurn();
         } 
     
     }
 
-    const checkForWinner = (array) => {
+    const checkForWinner = () => {
+        const array = board.printBoard();
+
         if (allEqualsInRow(array) === true || allEqualsInColumns(array) === true ||
-            allEqualsInDiagonal(array === true)) {
-                alert(`${getActivePlayer().name} WIN!!`)
+            allEqualsInDiagonal(array) === true) {
+                setTimeout(() => {
+                    alert(`${getActivePlayer().name} WIN!!`);
+                }, 100);                
             }
     }
 
-    const checkForTiedGame = (array) => {
+    const checkForTiedGame = () => {
+
+        const array = board.printBoard()
+
         const tiedGame = array.every(row => row.every(cell => cell !== undefined));
 
         if (tiedGame === true) {
-            alert('It is a Tied Game');
+
+            setTimeout(() => {
+                alert('It is a Tied Game');
+            }, 100);
         }
     }
 
@@ -175,6 +183,8 @@ function GameController (playerOneName = "Player One", playerTwoName = "Player T
     return {
         playRound,
         getActivePlayer,
+        checkForWinner,
+        checkForTiedGame,
         getBoard: board.getBoard,
         printBoard: board.printBoard
     };
@@ -188,7 +198,7 @@ function ScreenController() {
     const updateScreen = () => {
         boardDiv.textContent = "";
 
-        const board = game.printBoard();
+        const board = game.getBoard();
         const activePlayer = game.getActivePlayer();
 
         playerturnDiv.textContent =`${activePlayer.name}'s turn...`;
@@ -199,7 +209,7 @@ function ScreenController() {
                 cellButton.classList.add("cell");
                 cellButton.dataset.row = indexRow;
                 cellButton.dataset.column = indexColumn;
-                cellButton.textContent = cell;
+                cellButton.textContent = cell.getValue();
                 boardDiv.appendChild(cellButton);
             });
         });
@@ -211,11 +221,14 @@ function ScreenController() {
 
         if (!selectedColumn || !selectedRow)  return; 
     
-        game.playRound(selectedRow, selectedColumn);
-
-        /* game.checkwinner() */
+        game.playRound(selectedRow, selectedColumn);        
 
         updateScreen();
+
+        setTimeout(()=> {
+            game.checkForWinner();
+            game.checkForTiedGame();
+        }, 100);
     }
 
     boardDiv.addEventListener("click", clickHandlerBoard);
