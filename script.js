@@ -86,7 +86,7 @@ function gameController() {
             if (result.tiedGame()) {
                 console.log("El juego esta empatado");
             }
-            if (result.allEqualRows() || result.allEqualColumns()) {
+            if (result.allEqualRows() || result.allEqualColumns() || result.equalDiagonal()) {
                 console.log(`El ganador es el: ${getActivePlayer().name}`);
             }
            
@@ -102,9 +102,7 @@ function gameController() {
     }
 }
 
-function gameResult (board) {  
-    
-    
+function gameResult (board) {     
 
     const tiedGame = () => {
         const currentBoard = board.printBoard();
@@ -135,10 +133,21 @@ function gameResult (board) {
         return false;
     }
 
+    const equalDiagonal = () => {
+        const currentBoard = board.printBoard();
+        if (currentBoard[0][0] === currentBoard[1][1] && currentBoard[0][0] === currentBoard[2][2] && currentBoard[0][0] !== undefined) {
+            return true;
+        }else if (currentBoard[0][2] === currentBoard[1][1] && currentBoard [0][2] === currentBoard[2][0] && currentBoard[0][2] !== undefined) {
+            return true;
+        }
+        return false;
+    }
+
     return {
        tiedGame,
        allEqualRows,
-       allEqualColumns
+       allEqualColumns,
+       equalDiagonal
     }
 }
 
