@@ -50,7 +50,7 @@ function gameController() {
     const playerTwoName = "Player Two";
 
     const board = gameBoard();
-    result = gameResult(board);
+    const result = gameResult(board);
 
     const printNewBoard = () => {
         console.log(board.printBoard());
@@ -76,7 +76,9 @@ function gameController() {
     const getActivePlayer = () => activePlayer;
 
     const playRound = (row, column) => {
+
         
+
         if (board.printBoard()[row][column] === undefined){
             board.setToken(row, column, getActivePlayer().token);
             printNewBoard();
@@ -84,10 +86,8 @@ function gameController() {
             if (result.tiedGame()) {
                 console.log("El juego esta empatado");
             }
-            if (result.allEqualRows()) {
+            if (result.allEqualRows() || result.allEqualColumns()) {
                 console.log(`El ganador es el: ${getActivePlayer().name}`);
-            }else{ 
-                console.log(result.allEqualRows())
             }
            
             switchPlayer();        
@@ -104,6 +104,8 @@ function gameController() {
 
 function gameResult (board) {  
     
+    
+
     const tiedGame = () => {
         const currentBoard = board.printBoard();
         const allCellsFull = (cell) => cell !== undefined && cell !== null;
@@ -120,19 +122,23 @@ function gameResult (board) {
     }
 
     const allEqualColumns = () => {
-        for (let i = 0; i < board[0].length; i++){
+        const currentBoard = board.printBoard();
+        for (let i = 0; i < currentBoard[0].length; i++){
             let column = []
-            for (let j = 0; j < board.length; j++) {
-                column.push(board[j][i]);
+            for (let j = 0; j < currentBoard.length; j++) {
+                column.push(currentBoard[j][i]);
             }
-            return column.every((cell)=> cell === cell[0]);     
-            
+            if(column.every((cell)=> cell === column[0]) && column[0] !== undefined){
+                return true;
+            }     
         }
+        return false;
     }
 
     return {
        tiedGame,
        allEqualRows,
+       allEqualColumns
     }
 }
 
