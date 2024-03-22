@@ -180,14 +180,13 @@ function screenController() {
             turnDiv.textContent = "¡Tied Game!";
             setTimeout(()=> {
                 game.restart();
-            game.printNewBoard();
             }, "1000");          
 
         }else if(result === "win"){
             turnDiv.textContent = `¡${activePlayer.name} Win!`;
             setTimeout(()=> {
                 game.restart();
-            game.printNewBoard();
+                
             }, "1000");
         }else{
             turnDiv.textContent = `It's ${activePlayer.name} turn`;
