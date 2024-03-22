@@ -151,4 +151,29 @@ function gameResult (board) {
     }
 }
 
-const game = gameController()
+function screenDisplay() {
+
+    const board = gameBoard();
+    const controller = gameController()
+    const boardDiv = document.querySelector('.board');
+    const turnDiv = document.querySelector('.turn');
+
+    const updateScreen = () => {
+        boardDiv.textContent = "";
+        turnDiv.textContent = `It's ${controller.getActivePlayer().name} turn`;
+
+
+    }
+
+    const createGrid = () => {
+        
+    }
+
+    return {
+        updateScreen,
+    }
+}
+
+const game = gameController();
+const display = screenDisplay();
+display.updateScreen()
