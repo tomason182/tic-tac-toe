@@ -75,9 +75,7 @@ function gameController() {
     
     const getActivePlayer = () => activePlayer;
 
-    const playRound = (row, column) => {
-
-        
+    const playRound = (row, column) => {        
 
         if (board.printBoard()[row][column] === undefined){
             board.setToken(row, column, getActivePlayer().token);
@@ -85,11 +83,15 @@ function gameController() {
             
             if (result.tiedGame()) {
                 console.log("El juego esta empatado");
-                restartGame();
+                setTimeout(() =>{
+                    restartGame(board);
+                }, 100); 
             }
             if (result.allEqualRows() || result.allEqualColumns() || result.equalDiagonal()) {
                 console.log(`El ganador es el: ${getActivePlayer().name}`);
-                restartGame();
+                setTimeout(() =>{
+                    restartGame(board);
+                }, 100);                
             }
            
             switchPlayer();        
@@ -102,6 +104,7 @@ function gameController() {
         playRound,
         printNewBoard,
         getBoard: board.getBoard,
+        setToken: board.setToken,
     }
 }
 
@@ -154,15 +157,17 @@ function gameResult (board) {
     }
 }
 
-function restartGame(){
+function restartGame(board){
 
-    const board = gameBoard();
-    
+    game = gameController()
+
     board.getBoard().forEach((row, indexRow) => {
         row.forEach((column, indexColumn) => {
             board.setToken(indexRow, indexColumn, undefined);
         });
     });
+
+    game.printNewBoard()
 }
 
 function screenController() {
