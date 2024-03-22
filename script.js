@@ -85,9 +85,11 @@ function gameController() {
             
             if (result.tiedGame()) {
                 console.log("El juego esta empatado");
+                restartGame();
             }
             if (result.allEqualRows() || result.allEqualColumns() || result.equalDiagonal()) {
                 console.log(`El ganador es el: ${getActivePlayer().name}`);
+                restartGame();
             }
            
             switchPlayer();        
@@ -98,7 +100,8 @@ function gameController() {
         switchPlayer,
         getActivePlayer,
         playRound,
-        printNewBoard
+        printNewBoard,
+        getBoard: board.getBoard,
     }
 }
 
@@ -151,29 +154,53 @@ function gameResult (board) {
     }
 }
 
-function screenDisplay() {
+function restartGame(){
 
     const board = gameBoard();
-    const controller = gameController()
+    
+    board.getBoard().forEach((row, indexRow) => {
+        row.forEach((column, indexColumn) => {
+            board.setToken(indexRow, indexColumn, undefined);
+        });
+    });
+}
+
+function screenController() {
+
+    const game = gameController()
     const boardDiv = document.querySelector('.board');
     const turnDiv = document.querySelector('.turn');
 
     const updateScreen = () => {
         boardDiv.textContent = "";
-        turnDiv.textContent = `It's ${controller.getActivePlayer().name} turn`;
 
+        const board = game.getBoard()
+        const activePlayer = game.getActivePlayer();
 
+        turnDiv.textContent = `It's ${activePlayer.name} turn`;
+
+        board.forEach((row, indexRow) => {
+            row.forEach((cell, indexColumn)=> {
+                const cellButton = document.createElement('button');
+                cellButton.classList.add('cell');
+                cellButton.dataset.row = indexRow;
+                cellButton.dataset.column = indexColumn;
+                cellButton.textContent = cell.getValue();
+                boardDiv.appendChild(cellButton);
+            })
+        });
     }
 
-    const createGrid = () => {
-        
+    function clickHandler(e){
+        const selectedIndexRow = e.target.dataset.row;
+        const selectedIndexColumn = e.target.dataset.column;
+        game.playRound(selectedIndexRow, selectedIndexColumn);
+        updateScreen();
     }
 
-    return {
-        updateScreen,
-    }
+    boardDiv.addEventListener('click', clickHandler)
+    
+    updateScreen()
 }
 
-const game = gameController();
-const display = screenDisplay();
-display.updateScreen()
+screenController();
