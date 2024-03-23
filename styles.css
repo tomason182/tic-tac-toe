@@ -57,3 +57,16 @@ h6 {
 .cell[data-token="otoken"]{
     color: #fff;
 }
+
+.controller {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content:flex-end;
+    
+}
+
+button.player-selection {
+    padding: 5px 15px;
+    max-width: fit-content;
+}
