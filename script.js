@@ -199,6 +199,11 @@ function screenController() {
                 cellButton.dataset.row = indexRow;
                 cellButton.dataset.column = indexColumn;
                 cellButton.textContent = cell.getValue();
+                if (cell.getValue() === "X"){
+                    cellButton.dataset.token = "xtoken";
+                }else if (cell.getValue() === "O"){
+                    cellButton.dataset.token = "ytoken";
+                }
                 boardDiv.appendChild(cellButton);
             })
         });
