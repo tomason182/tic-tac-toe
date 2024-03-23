@@ -202,7 +202,7 @@ function screenController() {
                 if (cell.getValue() === "X"){
                     cellButton.dataset.token = "xtoken";
                 }else if (cell.getValue() === "O"){
-                    cellButton.dataset.token = "ytoken";
+                    cellButton.dataset.token = "otoken";
                 }
                 boardDiv.appendChild(cellButton);
             })

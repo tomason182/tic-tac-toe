@@ -4,7 +4,8 @@ body {
 
 .container {
     background-color: #000;
-    border: 1px solid #d5bdaf;
+    border: 1px solid #adb5bd;
+    border-radius: 9px;
     width: 650px;
     height: 445px;
     margin: 2rem auto;
@@ -47,4 +48,12 @@ body {
 
 h1 {
     color: white;
+}
+
+.cell[data-token="xtoken"] {
+    color: #403d39;
+}
+
+.cell[data-token="otoken"]{
+    color: #fff;
 }
